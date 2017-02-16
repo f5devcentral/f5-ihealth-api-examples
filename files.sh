@@ -52,7 +52,7 @@ function usage {
 	echo " - OPT: FORMAT=json will switch responses and processing to be in json"
 	echo
 	echo "This script will download files, and is a companion to"
-	echo "an F5 Dev Central article series about the iHealth API [insert link]"
+	echo "an F5 Dev Central article series about the iHealth API"
 
 }
 

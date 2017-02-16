@@ -52,7 +52,7 @@ function usage {
 	echo
 	echo "This script will change the description associated with a qkview,"
 	echo "and is a companion to an F5 Dev Central article series about the iHealth"
-	echo "API [insert link]"
+	echo "API"
 }
 
 function error {
