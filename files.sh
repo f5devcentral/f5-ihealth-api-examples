@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 # This is a quick script to get command output via the iHealth API.
-# [link to dev central wiki]
+# https://devcentral.f5.com/wiki/ihealth.homepage.ashx
+# https://ihealth-api.f5.com/qkview-analyzer/api/docs/index.html
+
+# The source for these scripts is here:
+# https://github.com/f5devcentral/f5-ihealth-api-examples
 
 # These are your iHealth credentials - either fill in the double quotes, or better yet, use environment variables
 # during invocation
