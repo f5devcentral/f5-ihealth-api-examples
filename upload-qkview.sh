@@ -51,6 +51,7 @@ function usage {
 	echo " - OPT: VERBOSE=0 will turn off status messages"
 	echo " - OPT: DEBUG=1 will flood you with details"
 	echo " - OPT: FORMAT=json will switch responses and processing to be in json"
+	echo " - OPT: VISIBLE=1 will show the uploaded qkview in the iHealth GUI"
 	echo
 	echo "This script will produce a diagnostics summary, and is a companion to"
 	echo "an F5 Dev Central article series about the iHealth API"
@@ -99,7 +100,12 @@ function authenticate {
 
 function upload_qkview {
 	path="$1"
-	CURL_CMD="${CURL} ${ACCEPT_HEADER} ${CURL_OPTS} -F 'qkview=@${path}' -D /dev/stdout https://ihealth-api.f5.com/qkview-analyzer/api/qkviews"
+	form_data="-F 'qkview=@${path}'"
+	if [[ $VISIBLE ]]; then
+		[[ $DEBUG ]] && echo "Flagging upload for GUI visibility" >&2
+		form_data="${form_data} -F visible_in_gui=True"
+	fi
+	CURL_CMD="${CURL} ${ACCEPT_HEADER} ${CURL_OPTS} ${form_data} -D /dev/stdout https://ihealth-api.f5.com/qkview-analyzer/api/qkviews"
 	[[ $DEBUG ]] && echo "${CURL_CMD}" >&2
 	out="$(eval "${CURL_CMD}")"
 	if [[ $? -ne 0 ]]; then
@@ -161,4 +167,4 @@ qkview_url="$(upload_qkview "${QKVIEW_PATH}")"
 wait_for_state "${qkview_url}"
 
 [[ $VERBOSE ]] && echo "${QKVIEW_PATH} uploaded successfully, see ${qkview_url}"
-
+[[ $VERBOSE ]] && [[ $VISIBLE ]] && echo "May also be viewed in the GUI: https://ihealth.f5.com/qkview-analyzer/qv/${qkview_url##*/}"
